@@ -1,0 +1,40 @@
+import generate ;
+import ../buildtools/embedjs ;
+
+make selfhosted.out.h :
+	../buildtools//embedjs_embed selfhosted.in_p
+: @embedjs.actions-compress ;
+
+preprocessed selfhosted.in_p : selfhosted.in : <include>.. ;
+
+generate selfhosted.in :
+	../js.msg
+	TypedObjectConstants.h
+	SelfHostingDefines.h
+	Utilities.js
+	Array.js
+	Classes.js
+	Date.js
+	Error.js
+	Function.js
+	Generator.js
+	Intl.js
+	IntlCurrency.js
+	Iterator.js
+	Map.js
+	Module.js
+	Number.js
+	Object.js
+	Promise.js
+	Reflect.js
+	RegExp.js
+	RegExpGlobalReplaceOpt.h.js
+	RegExpLocalReplaceOpt.h.js
+	String.js
+	Set.js
+	Sorting.js
+	TypedArray.js
+	TypedObject.js
+	WeakMap.js
+	WeakSet.js
+: <generating-rule>@embedjs.merge-sources ;

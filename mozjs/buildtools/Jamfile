@@ -1,0 +1,4 @@
+
+exe jskwgen : jskwgen.cpp : <include>.. ;
+
+exe embedjs_embed : embedjs_embed.cpp $(TOP)//stdc++fs /pkg-config//zlib ;

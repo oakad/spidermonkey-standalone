@@ -1,0 +1,47 @@
+import "class" : new ;
+import common ;
+
+rule merge-sources ( project name : property-set : sources * )
+{
+	local result ;
+
+	local msg ;
+	local js-src ;
+	for local s in $(sources)
+	{
+		local s-name = [ $(s).name ] ;
+		if $(s-name:S) = .msg
+		{
+			msg = $(s) ;
+		}
+		if $(s-name:S) = .js
+		{
+			js-src += $(s) ;
+		}
+	}
+	local a = [
+		new non-scanning-action $(msg) $(js-src)
+		: embedjs.actions-merge-sources
+		: $(property-set)
+	] ;
+	result += [
+		new file-target $(name) : CPP : $(project) : $(a)
+	] ;
+	return $(result) ;
+}
+
+actions actions-merge-sources
+{
+	truncate -s 0 $(<)
+	let MSG_COUNTER=0
+	sed -n 's/^MSG_DEF(\(JSMSG_\(\w\+\)\).*/\#define \1/p' < $(>[1]) | while read msg; do
+		echo $msg $MSG_COUNTER >> $(<);
+		let MSG_COUNTER++;
+	done
+	find $(>[2-]) -exec echo -e \#include \"{}\" >> $(<) \;
+}
+
+actions actions-compress
+{
+	$(>[1]) $(<) $(>[2])
+}

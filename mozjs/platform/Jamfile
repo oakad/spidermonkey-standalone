@@ -1,0 +1,26 @@
+
+
+lib platform : [ glob
+	ds/*.cpp
+	mozilla/*.cpp
+	mozilla/posix/*.cpp
+	ctypes/*.cpp
+	irregexp/*.cpp
+	double-conversion/*.cc
+	threading/*.cpp
+	threading/posix/*.cpp
+	fdlibm/*.cpp
+]
+	/pkg-config//libffi
+	/pkg-config//nspr
+:
+	<link>static
+	<include>.
+	<include>..
+	<include>../include
+	<target-os>linux:<define>DLL_PREFIX=\\\"lib\\\"
+	<target-os>linux:<define>DLL_SUFFIX=\\\".so\\\"
+	<target-os>linux:<define>CV_USE_CLOCK_API
+: :
+	<include>.
+;

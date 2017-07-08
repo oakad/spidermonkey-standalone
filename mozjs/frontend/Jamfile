@@ -1,0 +1,13 @@
+
+lib frontend : [ glob *.cpp ] ..//vm :
+	<link>static
+	<include>..
+	<include>../include
+	<implicit-dependency>ReservedWordsGenerated.h ;
+
+make ReservedWordsGenerated.h : ReservedWords.h : @generate_reserved ;
+
+actions generate_reserved
+{
+	python2 $(TOP)/mozjs/buildtools/GenerateReservedWords.py $(>) > $(<)
+}

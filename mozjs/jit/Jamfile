@@ -1,0 +1,12 @@
+
+lib jit : [ glob
+	*.cpp
+	shared/*.cpp
+	x86-shared/*.cpp
+	x64/*.cpp
+:
+	ExecutableAllocatorWin.cpp
+] ..//platform :
+	<link>static
+	<include>..
+	<include>../include ;

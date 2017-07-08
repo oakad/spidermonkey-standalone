@@ -1,0 +1,40 @@
+import project ;
+import targets ;
+import alias ;
+import "class" : new ;
+import property-set ;
+
+rule init ( pkgs + )
+{
+	if ! $(.initialized)
+	{
+		.initialized = true ;
+
+		project.initialize $(__name__) ;
+		.project = [ project.current ] ;
+		project pkg-config ;
+	}
+
+	if $(.configured.$(condition))
+	{
+		return ;
+	}
+	else
+	{
+		for local pkg in $(pkgs)
+		{
+			local cflags = [ SHELL "pkg-config --cflags $(pkg) | tr -d '\\n'" ] ;
+			local libs = [ SHELL "pkg-config --libs $(pkg) | tr -d '\\n'" ] ;
+			local mt = [ new alias-target-class $(pkg)
+				: $(.project) : : :
+				: [ property-set.create
+					<cflags>$(cflags)
+					<linkflags>$(libs)
+				]
+			] ;
+			targets.main-target-alternative $(mt) ;
+		}
+	}
+
+	.configured.$(condition) = true ;
+}

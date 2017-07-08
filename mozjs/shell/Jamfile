@@ -1,0 +1,20 @@
+import generate ;
+import ../buildtools/embedjs ;
+
+exe js : [ glob *.cpp ] .//mozalloc ..//mozjs-54 $(TOP)//readline :
+	<include>.
+	<include>..
+	<include>../include
+	<define>EDITLINE
+	<implicit-dependency>shellmoduleloader.out.h ;
+
+make shellmoduleloader.out.h :
+	../buildtools//embedjs_embed shellmoduleloader.in_p
+: @embedjs.actions-compress ;
+
+preprocessed shellmoduleloader.in_p : shellmoduleloader.in
+: <include>. <include>.. ;
+
+generate shellmoduleloader.in :
+	../js.msg ModuleLoader.js
+: <generating-rule>@embedjs.merge-sources ;

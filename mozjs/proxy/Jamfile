@@ -1,0 +1,5 @@
+
+lib proxy : [ glob *.cpp ] ..//platform :
+	<link>static
+	<include>..
+	<include>../include ;

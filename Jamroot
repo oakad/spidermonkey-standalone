@@ -1,0 +1,23 @@
+import option ;
+import buildtools/pkg-config ;
+
+local LTO_JOBS = [ option.get lto-jobs : 4 ] ;
+
+using gcc : : :
+	<compileflags>-flto=$(LTO_JOBS)
+	<cxxflags>-std=gnu++14
+	<linkflags>"-std=gnu++14 -flto=$(LTO_JOBS)"
+	<archiver>gcc-ar
+	<ranlib>gcc-ranlib
+;
+
+using pkg-config : libffi nspr zlib icu-io ;
+
+path-constant TOP : . ;
+
+alias readline : : : : <linkflags>-lreadline ;
+
+alias stdc++fs : : : : <linkflags>-lstdc++fs ;
+
+alias libxml2 : : : : <include>/usr/include/libxml2 <linkflags>-lxml2 ;
+

@@ -1,0 +1,37 @@
+project mozjs : requirements
+	<threading>multi
+	<define>XP_UNIX
+	<define>JS_CODEGEN_X64
+	<define>JS_CPU_X64
+	<define>JS_DEFAULT_JITREPORT_GRANULARITY=3
+	<define>ENABLE_INTL_API
+	<define>EXPOSE_INTL_API
+	<define>ENABLE_BINARYDATA
+	<define>ENABLE_SHARED_ARRAY_BUFFER
+	<define>HAVE_ASINH
+	<define>HAVE_LOCALECONV
+	<define>HAVE_VA_LIST_AS_ARRAY
+	<define>HAVE_GETC_UNLOCKED
+	<define>HAVE_VISIBILITY_ATTRIBUTE
+	<define>HAVE_LOCALTIME_R
+	<define>HAVE_SETLOCALE
+	<define>HAVE_SSIZE_T
+	<define>MOZILLA_VERSION=\\\"54.0.1\\\"
+	<define>RELEASE_BUILD
+	<cxxflags>"-Wno-invalid-offsetof -Wno-strict-aliasing"
+: default-build release ;
+
+lib mozjs-54 :
+	[ glob *.cpp ]
+	platform
+	gc
+	frontend
+	wasm
+	jit
+	proxy
+:
+	<include>.
+	<include>include
+	<linkflags>-Wl,--no-undefined
+;
+

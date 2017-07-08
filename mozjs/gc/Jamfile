@@ -1,0 +1,5 @@
+
+lib gc : [ glob *.cpp ] ..//vm :
+	<link>static
+	<include>..
+	<include>../include ;

@@ -1,0 +1,2 @@
+
+alias perf : jsperf.cpp pm_linux.cpp : : : <include>.. ;

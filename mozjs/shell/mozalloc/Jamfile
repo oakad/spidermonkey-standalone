@@ -1,0 +1,9 @@
+lib mozalloc :
+	mozalloc.cpp
+	mozalloc_abort.cpp
+	mozalloc_oom.cpp
+:
+	<link>static
+	<include>.
+	<include>../../
+	<include>../../include ;

@@ -1,0 +1,9 @@
+
+lib vm : [
+	glob *.cpp ../builtin/*.cpp
+	: TraceLogging*.cpp
+] ..//platform ../builtin//perf /pkg-config//zlib /pkg-config//icu-io :
+	<link>static
+	<include>..
+	<include>../include
+	<implicit-dependency>../builtin//selfhosted.out.h ;
